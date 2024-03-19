@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:kamoo/models/product_model.dart';
+import 'package:kamoo/providers/wishlist_provider.dart';
 import 'package:kamoo/theme.dart';
+import 'package:provider/provider.dart';
 
 class WishlistCard extends StatelessWidget {
-  const WishlistCard({super.key});
+  final ProductModel product;
+  const WishlistCard(this.product, {super.key});
 
   @override
   Widget build(BuildContext context) {
+    WishlistProvider wishlistProvider = Provider.of<WishlistProvider>(context);
+
     return Container(
       margin: EdgeInsets.only(top: 20),
       padding: EdgeInsets.only(
@@ -35,7 +41,7 @@ class WishlistCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Predator 20.3 Firm Ground Boots',
+                  product.name!,
                   style: primaryTextStyle.copyWith(
                     fontWeight: semiBold,
                   ),
@@ -43,7 +49,7 @@ class WishlistCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
-                  '\$143,98',
+                  '\$${product.price}',
                   style: priceTextStyle,
                 )
               ],
@@ -52,9 +58,24 @@ class WishlistCard extends StatelessWidget {
           SizedBox(
             width: 25,
           ),
-          Image.asset(
-            'assets/button_wishlist_blue.png',
-            width: 34,
+          GestureDetector(
+            onTap: () {
+              wishlistProvider.setProduct(product);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  duration: Duration(seconds: 1),
+                  backgroundColor: alertColor,
+                  content: Text(
+                    'Has been removed from the Whitelist',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              );
+            },
+            child: Image.asset(
+              'assets/button_wishlist_blue.png',
+              width: 34,
+            ),
           )
         ],
       ),

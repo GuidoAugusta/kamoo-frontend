@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kamoo/providers/wishlist_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:kamoo/pages/cart_page.dart';
 import 'package:kamoo/pages/checkout_page.dart';
@@ -27,6 +28,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => ProductProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => WishlistProvider(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
